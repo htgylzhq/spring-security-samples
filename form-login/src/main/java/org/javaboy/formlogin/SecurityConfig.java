@@ -19,20 +19,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("javaboy")
-                .password("123").roles("admin");
+                .withUser("javaboy.org")
+                .password("123")
+                .roles("admin")
+                .and()
+                .withUser("zhangsan")
+                .password("123")
+                .roles("admin");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/js/**", "/css/**","/images/**");
+        web.ignoring().antMatchers("/js/**", "/css/**", "/images/**");
     }
 
     @Override
@@ -46,4 +53,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
     }
+
 }
